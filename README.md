@@ -7,20 +7,22 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 ## What's here
 
 - `CLAUDE.md`: the rules Claude follows in every project.
-- `settings.json`: my user settings.
-- `hooks/block-memory-writes.sh`: stops Claude's file tools writing into a memory folder (`~/.claude/projects/*/memory/`).
-- `hooks/commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line (a second `-m`, a newline, or a message file or heredoc).
-- `hooks/draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
-- `hooks/conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title is what lands in history on a squash merge. A repo opts out with `git config claude.conventionalPrTitles false` (or an `includeIf` that sets it for a group of repos), unless it uses release-please, commitlint or a semantic PR title check, which all expect the convention.
-- `hooks/filtered-tests-only.sh`: blocks running a whole test suite or project (`dotnet test` without `--filter`, bare `npm test`, `jest`, `vitest`, `pytest` or `go test ./...`).
-- `hooks/lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
-- `tests/hooks.sh`: runs each hook against commands it should allow and block. Run `sh tests/hooks.sh` after changing a hook.
+- `settings.json`: model, permissions, plugins, and the wiring for the hooks below.
 
-Auto memory is off. It saved corrections as files I never saw, and it tended to turn a one-off correction into a blanket rule. Anything worth keeping goes in `CLAUDE.md` or becomes a check. The setting stops Claude loading memories, and the hook blocks Claude's file tools from writing new ones.
+### Hooks
 
-Commit and PR attribution is off in `settings.json`, so Claude Code doesn't ask for `Co-Authored-By` or "Generated with Claude Code" lines in the first place.
+These live in `hooks/` and run before Claude's tool calls, blocking the ones that break a rule. Run `sh tests/hooks.sh` after changing one. It checks each hook against commands it should allow and block.
+
+- `block-memory-writes.sh`: stops Claude writing memory files into `~/.claude/projects/*/memory/`. Auto memory is off because it saved corrections I never saw and made one-off fixes into blanket rules. The setting only stops memories loading, so this hook stops new ones being written.
+- `commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line, whether through a second `-m`, a newline, a message file or a heredoc.
+- `draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
+- `conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title becomes the commit on a squash merge. To opt a repo out, set `git config claude.conventionalPrTitles false`, or use an `includeIf` to set it for a group of repos. Repos that use release-please, commitlint or a semantic PR title check stay enforced, since those tools expect the convention.
+- `filtered-tests-only.sh`: blocks commands that run a whole test suite, such as `dotnet test` without `--filter`, `go test ./...` without `-run`, or `npm test`, `jest`, `vitest` and `pytest` with no path or filter.
+- `lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
 
 ## Install
+
+This moves any existing `CLAUDE.md` and `settings.json` aside, links the repo into `~/.claude`, then sets up the grilling skills.
 
 ```sh
 git clone git@github.com:desruc/claude-config.git ~/dev/claude-config
@@ -35,11 +37,9 @@ ln -s ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/sk
 ln -s ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
 ```
 
-Claude Code writes to `settings.json` itself, for example when you allow a command or change something in `/config`. With the symlink, those changes show up as a diff here, so you can keep or discard them.
-
 ## Skills
 
 These aren't in the repo because they're other people's work. I use them unchanged:
 
-- `humanizer` from [blader/humanizer](https://github.com/blader/humanizer). The writing rules in `CLAUDE.md` call it. `settings.json` enables it as a plugin with auto-update on, so Claude Code installs and updates it.
-- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). The install links just these two from a clone, because the plugin brings a dozen other skills that Claude would pick up on its own. `git -C ~/.local/share/mattpocock-skills pull` updates them.
+- `humanizer` from [blader/humanizer](https://github.com/blader/humanizer), which the writing rules in `CLAUDE.md` call. `settings.json` installs it as a plugin and keeps it up to date.
+- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). The install clones the repo and links only these two, because the plugin would bring a dozen other skills that Claude could pick up on its own. Run `git -C ~/.local/share/mattpocock-skills pull` to update them.
