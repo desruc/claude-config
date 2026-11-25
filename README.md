@@ -24,6 +24,8 @@ These live in `hooks/` and run before Claude's tool calls, blocking the ones tha
 
 This moves any existing `CLAUDE.md`, `settings.json` and `hooks` aside, links the repo into `~/.claude`, then sets up the grilling skills. It's safe to rerun: `ln` leaves links that already exist alone and reports them.
 
+The hooks need `jq`, which macOS 15 and later include. Without it they allow everything.
+
 ```sh
 git clone git@github.com:desruc/claude-config.git ~/dev/claude-config
 mkdir -p ~/.claude/skills
