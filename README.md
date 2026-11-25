@@ -11,6 +11,7 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 - `hooks/block-memory-writes.sh`: stops Claude's file tools writing into a memory folder (`~/.claude/projects/*/memory/`).
 - `hooks/commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line (a second `-m`, a newline, or a message file or heredoc).
 - `hooks/draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
+- `hooks/filtered-tests-only.sh`: blocks running a whole test suite or project (`dotnet test` without `--filter`, bare `npm test`, `jest`, `vitest`, `pytest` or `go test ./...`). CI runs the full suite.
 - `hooks/lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
 
 Auto memory is off. It saved corrections as files I never saw, and it tended to turn a one-off correction into a blanket rule. Anything worth keeping goes in `CLAUDE.md` or becomes a check. The setting stops Claude loading memories, and the hook blocks Claude's file tools from writing new ones.
@@ -29,6 +30,7 @@ ln -s ~/dev/claude-config/settings.json ~/.claude/settings.json
 ln -s ~/dev/claude-config/hooks/block-memory-writes.sh ~/.claude/hooks/block-memory-writes.sh
 ln -s ~/dev/claude-config/hooks/commit-subject-only.sh ~/.claude/hooks/commit-subject-only.sh
 ln -s ~/dev/claude-config/hooks/draft-prs-only.sh ~/.claude/hooks/draft-prs-only.sh
+ln -s ~/dev/claude-config/hooks/filtered-tests-only.sh ~/.claude/hooks/filtered-tests-only.sh
 ln -s ~/dev/claude-config/hooks/lib ~/.claude/hooks/lib
 ```
 

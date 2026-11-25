@@ -48,8 +48,6 @@ co-authorship attributions anywhere.
 - Verify your own work before handing it over: run the tests relevant to your
   change, exercise the code path you changed, and for a bug fix, reproduce the
   bug before and after.
-- Never run a whole test project or suite. Filter to the affected tests; CI
-  runs the full suite.
 - Hand over evidence, not claims: test output, screenshots or logs. Say what
   you couldn't verify.
 

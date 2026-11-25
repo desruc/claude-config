@@ -60,6 +60,10 @@
           {
             "type": "command",
             "command": "sh ~/.claude/hooks/draft-prs-only.sh"
+          },
+          {
+            "type": "command",
+            "command": "sh ~/.claude/hooks/filtered-tests-only.sh"
           }
         ]
       },
