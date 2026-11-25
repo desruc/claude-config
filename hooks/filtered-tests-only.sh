@@ -33,7 +33,7 @@ require_runner_filter() {
 each_invocation "$command" 'dotnet +test' require_dotnet_filter
 each_invocation "$command" 'go +test' require_go_run_for_all_packages
 for runner_pattern in \
-  '(npm|pnpm|yarn|bun)( +run)? +test' \
+  '(npm|pnpm|yarn|bun)( +run)? +test(:[^ ]+)?' \
   '((npx|bunx|yarn|pnpm( +exec)?) +)?jest' \
   '((npx|bunx|yarn|pnpm( +exec)?) +)?vitest( +run)?' \
   '((python3? +-m|uv +run|poetry +run) +)?pytest'

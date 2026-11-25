@@ -87,6 +87,7 @@ block filtered-tests-only 'go test ./...'
 block filtered-tests-only 'npm test 2>&1 | tail -20'
 block filtered-tests-only 'npx jest --ci --maxWorkers 2'
 block filtered-tests-only 'pytest -n 4'
+block filtered-tests-only 'npm run test:unit'
 
 echo "$((case_count - failure_count))/$case_count passed"
 [ "$failure_count" -eq 0 ]
