@@ -12,13 +12,13 @@ check_pr_title() {
     /^--title=/ { sub(/^--title=/, ""); print; exit }
     { previous_arg = $0 }
   ')
-  [ -z "$pr_title" ] && return
+  [ -z "$pr_title" ] && ! printf '%s\n' "$invocation_args" | grep -qE '^(-f|--fill(-first|-verbose)?)$' && return
 
   [ "$(git -C "$working_directory" config --type=bool claude.conventionalPrTitles 2>/dev/null)" = "false" ] && return
 
   printf '%s\n' "$pr_title" | grep -qE '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?!?: [^ ]' && return
 
-  echo "PR titles use Conventional Commits: type(scope): plain descriptive sentence, where type is one of build, chore, ci, docs, feat, fix, perf, refactor, revert, style or test. The scope is optional." >&2
+  echo "PR titles use Conventional Commits: type(scope): plain descriptive sentence, where type is one of build, chore, ci, docs, feat, fix, perf, refactor, revert, style or test. The scope is optional. With --fill, pass --title too, since a filled title comes from a commit subject." >&2
   exit 2
 }
 

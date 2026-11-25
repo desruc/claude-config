@@ -69,10 +69,12 @@ block draft-prs-only 'gh pr create --draft --title "feat: add login" && gh pr cr
 allow draft-prs-only 'echo "Next: git push && gh pr create --title x"'
 
 allow conventional-pr-titles 'gh pr create --draft --title "fix(auth)!: reject expired tokens" --body "Body"'
-allow conventional-pr-titles 'gh pr create --draft --fill'
+allow conventional-pr-titles 'gh pr create --draft --fill --title "feat: add login"'
+allow conventional-pr-titles 'gh pr create --draft --fill' opted-out
 allow conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"' opted-out
 block conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"'
 block conventional-pr-titles 'gh pr edit 12 --title "Add login page"'
+block conventional-pr-titles 'gh pr create --draft --fill'
 
 allow filtered-tests-only 'dotnet build && dotnet test --no-build --filter "FullyQualifiedName~Login"'
 allow filtered-tests-only 'npx jest src/login.test.ts'
