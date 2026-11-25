@@ -11,7 +11,7 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 - `hooks/block-memory-writes.sh`: stops Claude's file tools writing into a memory folder (`~/.claude/projects/*/memory/`).
 - `hooks/commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line (a second `-m`, a newline, or a message file or heredoc).
 - `hooks/draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
-- `hooks/conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title is what lands in history on a squash merge. A repo opts out with `git config claude.conventionalPrTitles false` (or an `includeIf` that sets it for a group of repos), unless it has release-please config.
+- `hooks/conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title is what lands in history on a squash merge. A repo opts out with `git config claude.conventionalPrTitles false` (or an `includeIf` that sets it for a group of repos), unless it uses release-please, commitlint or a semantic PR title check, which all expect the convention.
 - `hooks/filtered-tests-only.sh`: blocks running a whole test suite or project (`dotnet test` without `--filter`, bare `npm test`, `jest`, `vitest`, `pytest` or `go test ./...`). CI runs the full suite.
 - `hooks/lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
 - `tests/hooks.sh`: runs each hook against commands it should allow and block. Run `sh tests/hooks.sh` after changing a hook.
