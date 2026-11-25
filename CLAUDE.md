@@ -65,17 +65,11 @@ co-authorship attributions anywhere.
   change (for example, a refactor separate from the feature built on it), not
   one commit for everything.
 - Commits are a subject line only.
-- Commit subjects: professional and descriptive. Don't use Conventional
-  Commits prefixes (`feat:`, `fix:`, `chore:` …) unless the repo uses them.
-  A repo uses them if it has release-please or commitlint config, a CI check
-  on PR titles, or a recent `git log` that follows the convention. In those
-  repos, use the prefixes in commit subjects and PR titles, with a plain
-  descriptive sentence after the prefix.
+- Commit subjects: professional and descriptive.
 
 ## Pull requests
 
-- The title is a plain descriptive sentence. Don't use Conventional Commits
-  prefixes unless the repo uses them (see Git rules).
+- The title is a plain descriptive sentence.
 - Never mention another pull request authored by someone else. It's fine to
   reference your own related or stacked PRs (e.g. "stacked on #118").
 - Write a real description:
