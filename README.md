@@ -18,7 +18,7 @@ These live in `hooks/` and run before Claude's tool calls, blocking the ones tha
 - `draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
 - `conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title becomes the commit on a squash merge. To opt a repo out, set `git config claude.conventionalPrTitles false`, or use an `includeIf` to set it for a group of repos.
 - `filtered-tests-only.sh`: blocks commands that run a whole test suite, such as `dotnet test` without `--filter`, `go test ./...` without `-run`, or `npm test`, `jest`, `vitest` and `pytest` with no path or filter.
-- `lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
+- `lib/`: splits a shell command into the commands it runs and their arguments, so the hooks check every command and its real flags, and ignore text inside quotes.
 
 ## Install
 

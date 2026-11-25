@@ -52,11 +52,15 @@ EOF
 block commit-subject-only "git commit -F- <<'EOF'
 Subject
 EOF"
+block commit-subject-only 'git commit -m "Subject" && git commit -m "Subject" -m "Body"'
+block commit-subject-only 'if git diff --quiet; then :; else git commit -m "Subject" -m "Body"; fi'
 
 allow draft-prs-only 'gh pr create --draft --title "feat: add login" --body "Body"'
 allow draft-prs-only 'gh pr create -d --title "feat: add login" --body "Body"'
 block draft-prs-only 'gh pr create --title "feat: add login" --body "Body"'
 block draft-prs-only 'gh pr create --title "feat: add login" --body "Run it with --draft first"'
+block draft-prs-only 'gh pr create --draft --title "feat: add login" && gh pr create --title "feat: add logout"'
+allow draft-prs-only 'echo "Next: git push && gh pr create --title x"'
 
 allow conventional-pr-titles 'gh pr create --draft --title "fix(auth)!: reject expired tokens" --body "Body"'
 allow conventional-pr-titles 'gh pr create --draft --fill'
@@ -72,6 +76,7 @@ block filtered-tests-only 'dotnet test'
 block filtered-tests-only 'CI=true npm test'
 block filtered-tests-only 'python3 -m pytest -x'
 block filtered-tests-only 'go test ./...'
+block filtered-tests-only 'npm test 2>&1 | tail -20'
 
 echo "$((case_count - failure_count))/$case_count passed"
 [ "$failure_count" -eq 0 ]
