@@ -79,7 +79,7 @@ function end_simple_command(    last_word, first_word, joined, word_index, comma
   else command_word_count = last_word - first_word + 1
   for (word_index = first_word + command_word_count; word_index <= last_word; word_index++) {
     argument = words[word_index]
-    gsub(/\n/, "\\n", argument)
+    gsub(/\n/, "\036", argument)
     print argument
   }
 }

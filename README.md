@@ -14,7 +14,7 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 These live in `hooks/` and run before Claude's tool calls, blocking the ones that break a rule. Run `sh tests/hooks.sh` after changing one. It checks each hook against commands it should allow and block.
 
 - `block-memory-writes.sh`: stops Claude writing memory files into `~/.claude/projects/*/memory/`. Auto memory is off because it saved corrections I never saw and made one-off fixes into blanket rules. The setting only stops memories loading, so this hook stops new ones being written.
-- `commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line, whether through a second `-m`, a newline, a message file or a heredoc.
+- `commit-subject-only.sh`: blocks a `git commit` whose message has more than a subject line, whether through a second `-m`, a newline, a message file or heredoc, a template, a trailer or sign-off, or a message reused from another commit.
 - `draft-prs-only.sh`: blocks `gh pr create` without `--draft`.
 - `conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title becomes the commit on a squash merge. To opt a repo out, set `git config claude.conventionalPrTitles false`, or use an `includeIf` to set it for a group of repos.
 - `filtered-tests-only.sh`: blocks commands that run a whole test suite, such as `dotnet test` without `--filter`, `go test ./...` without `-run`, or `npm test`, `jest`, `vitest` and `pytest` with no path or filter.

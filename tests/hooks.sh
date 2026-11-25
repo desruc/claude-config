@@ -41,7 +41,11 @@ allow commit-subject-only "git add -A && git commit -am 'Tidy imports' && git pu
 allow commit-subject-only "python3 - <<'EOF'
 cases = ['cd repo; git commit -m a -m b']
 EOF"
+allow commit-subject-only 'git commit -m "Escape \n in log output"'
 block commit-subject-only 'git commit -m "Subject" -m "Body"'
+block commit-subject-only 'git commit -m "Subject" --trailer "Co-authored-by: A <a@example.com>"'
+block commit-subject-only 'git commit -s -m "Subject"'
+block commit-subject-only 'git commit -C HEAD~1'
 block commit-subject-only 'git commit -m "Subject
 
 Body"'

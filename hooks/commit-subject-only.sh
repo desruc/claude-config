@@ -9,10 +9,51 @@ block() {
 }
 
 check_commit() {
-  message_flag_count=$(printf '%s\n' "$invocation_args" | grep -cE '^(-[a-zA-Z]*m|-m.+|--message(=.*)?)$')
-  [ "$message_flag_count" -gt 1 ] && block "Found more than one -m."
-  printf '%s\n' "$invocation_args" | grep -qE '^(-[a-zA-Z]*F.*|--file(=.*)?)$' && block "Don't pass the message from a file or heredoc."
-  printf '%s\n' "$invocation_args" | grep -qF '\n' && block "Found a newline in the message."
+  commit_problem=$(printf '%s\n' "$invocation_args" | awk '
+    value_option != "" { apply(value_option, $0); value_option = ""; next }
+    options_ended { next }
+    $0 == "--" { options_ended = 1; next }
+    /^--/ {
+      option = substr($0, 3)
+      equals_position = index(option, "=")
+      if (equals_position) apply(substr(option, 1, equals_position - 1), substr(option, equals_position + 1))
+      else if (option ~ /^(message|file|reuse-message|reedit-message|template|trailer|author|date|cleanup|fixup|squash|pathspec-from-file)$/) value_option = option
+      else apply(option, "")
+      next
+    }
+    /^-./ {
+      for (flag_index = 2; flag_index <= length($0); flag_index++) {
+        flag = substr($0, flag_index, 1)
+        if (flag ~ /[mFCct]/) {
+          if (flag_index < length($0)) apply(flag, substr($0, flag_index + 1))
+          else value_option = flag
+          next
+        }
+        if (flag ~ /[uS]/) next
+        apply(flag, "")
+      }
+    }
+    END {
+      if (problem == "" && message_count > 1) problem = "Found more than one -m."
+      print problem
+    }
+
+    function apply(option, value) {
+      if (option == "m" || option == "message") {
+        message_count++
+        if (index(value, "\036")) note("Found a newline in the message.")
+      }
+      else if (option == "F" || option == "file") note("Found a message from a file or heredoc.")
+      else if (option ~ /^(C|c|reuse-message|reedit-message)$/) note("Found a message reused from another commit.")
+      else if (option == "t" || option == "template") note("Found a commit message template.")
+      else if (option ~ /^(s|signoff|trailer)$/) note("Found a trailer or sign-off.")
+    }
+
+    function note(found_problem) {
+      if (problem == "") problem = found_problem
+    }
+  ')
+  [ -n "$commit_problem" ] && block "$commit_problem"
 }
 
 each_invocation "$(jq -r '.tool_input.command // empty')" 'git( +-[Cc] +[^ ]+)* +commit' check_commit
