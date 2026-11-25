@@ -43,5 +43,5 @@ Claude Code writes to `settings.json` itself, for example when you allow a comma
 
 These aren't in the repo because they're other people's work. I use them unchanged:
 
-- `humanizer` from [blader/humanizer](https://github.com/blader/humanizer). The writing rules in `CLAUDE.md` call it.
-- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills).
+- `humanizer` from [blader/humanizer](https://github.com/blader/humanizer). The writing rules in `CLAUDE.md` call it. `settings.json` enables it as a plugin with auto-update on, so Claude Code installs and updates it.
+- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). I install these by hand because the plugin brings a dozen other skills that Claude would pick up on its own.

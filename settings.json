@@ -23,7 +23,17 @@
   "model": "opus",
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "humanizer@humanizer": true
+  },
+  "extraKnownMarketplaces": {
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      },
+      "autoUpdate": true
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
