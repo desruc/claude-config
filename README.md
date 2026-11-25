@@ -14,6 +14,7 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 - `hooks/conventional-pr-titles.sh`: blocks a `gh pr create` or `gh pr edit` title without a Conventional Commits prefix, since the PR title is what lands in history on a squash merge. A repo opts out with `git config claude.conventionalPrTitles false` (or an `includeIf` that sets it for a group of repos), unless it has release-please config.
 - `hooks/filtered-tests-only.sh`: blocks running a whole test suite or project (`dotnet test` without `--filter`, bare `npm test`, `jest`, `vitest`, `pytest` or `go test ./...`). CI runs the full suite.
 - `hooks/lib/command-args.awk`: splits a shell command into its arguments, so the hooks check real flags and not text inside a quoted message.
+- `tests/hooks.sh`: runs each hook against commands it should allow and block. Run `sh tests/hooks.sh` after changing a hook.
 
 Auto memory is off. It saved corrections as files I never saw, and it tended to turn a one-off correction into a blanket rule. Anything worth keeping goes in `CLAUDE.md` or becomes a check. The setting stops Claude loading memories, and the hook blocks Claude's file tools from writing new ones.
 
