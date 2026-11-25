@@ -75,12 +75,16 @@ block conventional-pr-titles 'gh pr edit 12 --title "Add login page"'
 allow filtered-tests-only 'dotnet build && dotnet test --no-build --filter "FullyQualifiedName~Login"'
 allow filtered-tests-only 'npx jest src/login.test.ts'
 allow filtered-tests-only 'go test ./... -run TestLogin'
+allow filtered-tests-only 'pytest -x -n 4 tests/test_login.py'
+allow filtered-tests-only 'npx vitest run --reporter verbose src/login.test.ts'
 allow filtered-tests-only 'npm install -D jest vitest'
 block filtered-tests-only 'dotnet test'
 block filtered-tests-only 'CI=true npm test'
 block filtered-tests-only 'python3 -m pytest -x'
 block filtered-tests-only 'go test ./...'
 block filtered-tests-only 'npm test 2>&1 | tail -20'
+block filtered-tests-only 'npx jest --ci --maxWorkers 2'
+block filtered-tests-only 'pytest -n 4'
 
 echo "$((case_count - failure_count))/$case_count passed"
 [ "$failure_count" -eq 0 ]

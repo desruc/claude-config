@@ -21,7 +21,13 @@ require_go_run_for_all_packages() {
 }
 
 require_runner_filter() {
-  printf '%s\n' "$invocation_args" | grep -qE '^[^-]|^--(testNamePattern|testPathPattern|grep|filter)=' || block
+  printf '%s\n' "$invocation_args" | awk '
+    value_expected { value_expected = 0; next }
+    /^-[tk]/ || /^--(testNamePattern|testPathPatterns?|grep|filter|findRelatedTests|onlyChanged|changed|lf|last-failed)(=|$)/ { filtered = 1; next }
+    /^(-[cmnopwW]|--(config|reporter|reporters|outputFile|maxWorkers|minWorkers|pool|shard|environment|testEnvironment|testTimeout|project|selectProjects|root|rootDir|rootdir|dir|mode|retry|seed|numprocesses|maxfail|tb|basetemp|durations|cov|cov-report|cov-config|junitxml|ignore|ignore-glob|deselect|dist|log-level|override-ini|timeout|reruns))$/ { value_expected = 1; next }
+    /^[^-]/ { filtered = 1 }
+    END { exit !filtered }
+  ' || block
 }
 
 each_invocation "$command" 'dotnet +test' require_dotnet_filter
