@@ -66,10 +66,7 @@ co-authorship attributions anywhere.
 - Split commits into logical changes. Each commit should be one self-contained
   change (for example, a refactor separate from the feature built on it), not
   one commit for everything.
-- Commits are a subject line only. Never add a body/description. This means
-  literally no second line: don't pass `-m` twice, don't use a HEREDOC with
-  extra paragraphs, don't add a footer. If you catch yourself drafting more
-  than a subject line, stop and cut it down to just that.
+- Commits are a subject line only.
 - Commit subjects: professional and descriptive. Don't use Conventional
   Commits prefixes (`feat:`, `fix:`, `chore:` …) unless the repo uses them.
   A repo uses them if it has release-please or commitlint config, a CI check
