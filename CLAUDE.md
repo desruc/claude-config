@@ -10,10 +10,13 @@ co-authorship attributions anywhere.
   possible, and a test where not, so a reader or agent who misses it gets a
   compile error or a failing test.
 - Fix the root cause rather than patching around it with timers, retries,
-  sleeps or defensive checks that hide a bug. If the root cause is out of
-  scope, stop and tell me instead of shipping the patch.
+  sleeps or defensive checks that hide a bug, or by silencing a check (`any`,
+  casts, `@ts-ignore`, lint or warning suppressions, skipped tests). If the
+  root cause is out of scope, stop and tell me instead of shipping the patch.
 - Don't copy a pattern just because it exists nearby. If the closest example
-  looks like a workaround or deprecated code, tell me before following it.
+  looks like a workaround, deprecated code or tech debt, follow the intended
+  pattern if the codebase has one and point the old one out to me. If it
+  doesn't, tell me before following the old one.
 - Name a variable you add after its full concept and its kind:
   `cancelledOrderId`, not `id`; `parentNode`, not `node`. Don't rename
   existing variables unless I ask.
@@ -23,7 +26,8 @@ co-authorship attributions anywhere.
   should be.
 - Put exported entry points first and helpers below them.
 - Delete parameters, fields and return values your change leaves unread.
-  Don't keep them for compatibility.
+  Don't keep them for compatibility, and don't add shims, compat layers or
+  temporary fixes unless I agree.
 - Keep conditions inline. Don't move one into a helper method or rewrite it
   in a different form unless I ask.
 
@@ -32,8 +36,9 @@ co-authorship attributions anywhere.
 - Default to no comments.
 - The only exception is a constraint from outside our code that we can't
   express or test, such as a workaround for an upstream bug or a non-obvious
-  ordering requirement. Keep it short, and explain why, not what. Never use a
-  comment to justify a shortcut in our own code.
+  ordering requirement. Keep it short, and explain why, not what.
+- Never use a comment, doc, README or rules file to justify a shortcut in our
+  own code. If it needs justifying, raise it with me.
 - Never write comments that narrate the code, describe the change being made,
   or speak to a future reader or agent.
 - No TODOs and no references to our own tickets in code. A link to an upstream
@@ -49,22 +54,31 @@ co-authorship attributions anywhere.
   invariants, the cases that would actually break something), not every edge
   case you can think of. There's a line; stop before you're testing the
   language/framework rather than the code.
+- For logic with many states or inputs (parsers, state machines, algorithms),
+  suggest a property-based test instead of a long list of examples.
 
 ## Verification
 
 - Verify your own work before handing it over: run the tests relevant to your
-  change, exercise the code path you changed, and for a bug fix, reproduce the
-  bug before and after.
+  change, then run the thing itself. Drive UI in a browser and look at it, and
+  run CLIs and scripts. Passing types and tests isn't verification on its own.
+  For a bug fix, reproduce the bug before and after.
 - Hand over evidence, not claims: test output, screenshots or logs. Say what
   you couldn't verify.
+- If you run the same verification steps more than once, propose a script for
+  them.
 
 ## Corrections
 
-- When I correct you, suggest a lint rule, type or test that would stop it
-  recurring. If no check fits, propose a line for this file instead. Don't add
-  either unless I agree, since a check may be a repo-wide call.
+- When I correct you on something likely to come up again, suggest a lint
+  rule, type, test, import boundary or hook that would stop it recurring. If
+  no check fits, propose a line for this file instead. Don't add either unless
+  I agree, since a check may be a repo-wide call.
+- When a check you add bans something, block new occurrences first, then
+  offer to clean up the existing ones. Its error message should say how to fix
+  the root cause, not just what's banned.
 - Scope a correction to what I said. Don't turn a one-off fix into a blanket
-  rule.
+  rule. If unsure how far it applies, ask.
 
 ## Git rules
 
