@@ -9,13 +9,6 @@ export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
 git init -q "$fixtures_dir/personal"
 git init -q "$fixtures_dir/opted-out"
 git -C "$fixtures_dir/opted-out" config claude.conventionalPrTitles false
-git init -q "$fixtures_dir/opted-out-release-please"
-git -C "$fixtures_dir/opted-out-release-please" config claude.conventionalPrTitles false
-echo '{}' > "$fixtures_dir/opted-out-release-please/release-please-config.json"
-git init -q "$fixtures_dir/opted-out-pr-title-check"
-git -C "$fixtures_dir/opted-out-pr-title-check" config claude.conventionalPrTitles false
-mkdir -p "$fixtures_dir/opted-out-pr-title-check/.github/workflows"
-echo '      - uses: amannn/action-semantic-pull-request@v6' > "$fixtures_dir/opted-out-pr-title-check/.github/workflows/validate-pr-title.yml"
 
 case_count=0
 failure_count=0
@@ -70,8 +63,6 @@ allow conventional-pr-titles 'gh pr create --draft --fill'
 allow conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"' opted-out
 block conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"'
 block conventional-pr-titles 'gh pr edit 12 --title "Add login page"'
-block conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"' opted-out-release-please
-block conventional-pr-titles 'gh pr create --draft --title "Add login page" --body "Body"' opted-out-pr-title-check
 
 allow filtered-tests-only 'dotnet build && dotnet test --no-build --filter "FullyQualifiedName~Login"'
 allow filtered-tests-only 'npx jest src/login.test.ts'

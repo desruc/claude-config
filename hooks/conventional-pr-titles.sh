@@ -14,13 +14,7 @@ pr_title=$(printf '%s\n' "$pr_args" | awk '
 ')
 [ -z "$pr_title" ] && exit 0
 
-if [ "$(git -C "$working_directory" config --type=bool claude.conventionalPrTitles 2>/dev/null)" = "false" ]; then
-  repo_root=$(git -C "$working_directory" rev-parse --show-toplevel 2>/dev/null)
-  [ -f "$repo_root/release-please-config.json" ] || [ -f "$repo_root/.release-please-manifest.json" ] \
-    || ls "$repo_root"/.commitlintrc* "$repo_root"/commitlint.config.* >/dev/null 2>&1 \
-    || grep -qsE 'googleapis/release-please-action|amannn/action-semantic-pull-request' "$repo_root"/.github/workflows/*.y*ml \
-    || exit 0
-fi
+[ "$(git -C "$working_directory" config --type=bool claude.conventionalPrTitles 2>/dev/null)" = "false" ] && exit 0
 
 printf '%s\n' "$pr_title" | grep -qE '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?!?: [^ ]' && exit 0
 
