@@ -56,6 +56,10 @@
           {
             "type": "command",
             "command": "sh ~/.claude/hooks/commit-subject-only.sh"
+          },
+          {
+            "type": "command",
+            "command": "sh ~/.claude/hooks/draft-prs-only.sh"
           }
         ]
       },

@@ -76,7 +76,6 @@ co-authorship attributions anywhere.
 
 ## Pull requests
 
-- Always create PRs as drafts.
 - The title is a plain descriptive sentence. Don't use Conventional Commits
   prefixes unless the repo uses them (see Git rules).
 - Never mention another pull request authored by someone else. It's fine to
