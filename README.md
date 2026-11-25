@@ -37,9 +37,4 @@ ln -s ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/sk
 ln -s ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
 ```
 
-## Skills
-
-These aren't in the repo because they're other people's work. I use them unchanged:
-
-- `humanizer` from [blader/humanizer](https://github.com/blader/humanizer), which the writing rules in `CLAUDE.md` call. `settings.json` installs it as a plugin and keeps it up to date.
-- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). The install clones the repo and links only these two, because the plugin would bring a dozen other skills that Claude could pick up on its own. Run `git -C ~/.local/share/mattpocock-skills pull` to update them.
+The install links only `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills), because the plugin would bring a dozen other skills Claude could pick up on its own. Run `git -C ~/.local/share/mattpocock-skills pull` to update them.
