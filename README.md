@@ -24,17 +24,11 @@ Commit and PR attribution is off in `settings.json`, so Claude Code doesn't ask 
 
 ```sh
 git clone git@github.com:desruc/claude-config.git ~/dev/claude-config
-mkdir -p ~/.claude/hooks
 mv -n ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.pre-claude-config.bak
 mv -n ~/.claude/settings.json ~/.claude/settings.json.pre-claude-config.bak
 ln -s ~/dev/claude-config/CLAUDE.md ~/.claude/CLAUDE.md
+ln -s ~/dev/claude-config/hooks ~/.claude/hooks
 ln -s ~/dev/claude-config/settings.json ~/.claude/settings.json
-ln -s ~/dev/claude-config/hooks/block-memory-writes.sh ~/.claude/hooks/block-memory-writes.sh
-ln -s ~/dev/claude-config/hooks/commit-subject-only.sh ~/.claude/hooks/commit-subject-only.sh
-ln -s ~/dev/claude-config/hooks/draft-prs-only.sh ~/.claude/hooks/draft-prs-only.sh
-ln -s ~/dev/claude-config/hooks/conventional-pr-titles.sh ~/.claude/hooks/conventional-pr-titles.sh
-ln -s ~/dev/claude-config/hooks/filtered-tests-only.sh ~/.claude/hooks/filtered-tests-only.sh
-ln -s ~/dev/claude-config/hooks/lib ~/.claude/hooks/lib
 git clone https://github.com/mattpocock/skills.git ~/.local/share/mattpocock-skills
 mkdir -p ~/.claude/skills
 ln -s ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/skills/grilling
