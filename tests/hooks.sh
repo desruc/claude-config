@@ -49,6 +49,8 @@ block commit-subject-only 'git commit -C HEAD~1'
 block commit-subject-only 'git commit -m "Subject
 
 Body"'
+block commit-subject-only "git commit -m \$'Subject\n\nBody'"
+block commit-subject-only 'git commit -m "$(printf "Subject\n\nBody")"'
 block commit-subject-only "git commit -m \"\$(cat <<'EOF'
 Subject
 EOF

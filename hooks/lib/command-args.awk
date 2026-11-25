@@ -14,6 +14,26 @@ BEGIN {
       else arg = arg c
       continue
     }
+    if (quote == "$'") {
+      if (c == "'") quote = ""
+      else if (c == "\\" && next_c == "n") { arg = arg "\n"; i++ }
+      else if (c == "\\" && next_c == "t") { arg = arg "\t"; i++ }
+      else if (c == "\\" && index("\\'\"", next_c)) { arg = arg next_c; i++ }
+      else arg = arg c
+      continue
+    }
+    if (quote == "\"" && substitution_depth > 0) {
+      if (c == "(") substitution_depth++
+      else if (c == ")") substitution_depth--
+      arg = arg c
+      continue
+    }
+    if (quote == "\"" && c == "$" && next_c == "(") {
+      substitution_depth = 1
+      arg = arg "$("
+      i++
+      continue
+    }
     if (c == "\\") {
       i++
       if (next_c == "\n") continue
@@ -27,6 +47,7 @@ BEGIN {
       else arg = arg c
       continue
     }
+    if (c == "$" && next_c == "'") { quote = "$'"; has_arg = 1; i++; continue }
     if (c == "'" || c == "\"") { quote = c; has_arg = 1; continue }
     if (c == "#" && !has_arg) {
       comment_length = index(substr(text, i), "\n")

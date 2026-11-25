@@ -41,7 +41,7 @@ check_commit() {
     function apply(option, value) {
       if (option == "m" || option == "message") {
         message_count++
-        if (index(value, "\036")) note("Found a newline in the message.")
+        if (index(value, "\036") || ((index(value, "$(") || index(value, "`")) && index(value, "\\n"))) note("Found a newline in the message.")
       }
       else if (option == "F" || option == "file") note("Found a message from a file or heredoc.")
       else if (option ~ /^(C|c|reuse-message|reedit-message)$/) note("Found a message reused from another commit.")
