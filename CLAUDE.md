@@ -76,7 +76,9 @@ co-authorship attributions anywhere.
 
 ## Pull requests
 
-- The title is a plain descriptive sentence.
+- The title is a Conventional Commits type followed by a plain descriptive
+  sentence (`fix(auth): reject expired tokens`), unless the repo sets
+  `claude.conventionalPrTitles` to false in its git config.
 - Never mention another pull request authored by someone else. It's fine to
   reference your own related or stacked PRs (e.g. "stacked on #118").
 - Write a real description:
