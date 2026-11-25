@@ -1,9 +1,7 @@
 ## Attribution
 
 Act as my ghost writer: output is attributed to me. Never add authorship or
-co-authorship attributions anywhere (commits, code comments, PRs), including
-`🤖 Generated with [Claude Code]...` and `Co-Authored-By: Claude ...` or any
-variant.
+co-authorship attributions anywhere.
 
 ## Design
 
