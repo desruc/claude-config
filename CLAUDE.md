@@ -109,7 +109,5 @@ Applies to PR descriptions, review comments, and chat or ticket messages.
 - Avoid the obvious AI tells: "not X but Y" contrasts, one-line closers that
   restate the point, staged openers ("Quick note:", "Here's the thing"),
   and sign-offs like "Hope this helps" or "Let me know if you have questions".
-- Avoid stock AI words: delve, crucial, robust, leverage, seamless,
-  streamline, comprehensive, and "highlight"/"underscore" as verbs.
 - For anything longer than a couple of sentences, apply the humanizer skill
   (if installed) in embedded mode before handing it over.
