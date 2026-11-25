@@ -17,6 +17,13 @@ co-authorship attributions anywhere.
 - Name a variable you add after its full concept and its kind:
   `cancelledOrderId`, not `id`; `parentNode`, not `node`. Don't rename
   existing variables unless I ask.
+- Use full words for names. Short names are fine where the language or
+  codebase has an idiom for them (`ctx`, `err`, loop indices, `a`/`b` in a
+  sort callback), and the wider a name's scope, the more descriptive it
+  should be.
+- Put exported entry points first and helpers below them.
+- Delete parameters, fields and return values your change leaves unread.
+  Don't keep them for compatibility.
 - Keep conditions inline. Don't move one into a helper method or rewrite it
   in a different form unless I ask.
 
