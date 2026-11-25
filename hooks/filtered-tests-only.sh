@@ -9,7 +9,7 @@ command_args() {
 }
 
 block() {
-  echo "Don't run a whole test suite or project; CI runs it. Filter to the tests your change affects, for example dotnet test --filter, jest or vitest with a path or -t, pytest with a path or -k, go test ./pkg -run." >&2
+  echo "Don't run a whole test suite or project. Filter to the tests your change affects, for example dotnet test --filter, jest or vitest with a path or -t, pytest with a path or -k, go test ./pkg -run." >&2
   exit 2
 }
 
