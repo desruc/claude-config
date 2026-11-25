@@ -1,7 +1,3 @@
-# Working rules
-
-My working rules for every project.
-
 ## Attribution
 
 Act as my ghost writer: output is attributed to me. Never add authorship or
