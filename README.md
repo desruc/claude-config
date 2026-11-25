@@ -35,6 +35,10 @@ ln -s ~/dev/claude-config/hooks/draft-prs-only.sh ~/.claude/hooks/draft-prs-only
 ln -s ~/dev/claude-config/hooks/conventional-pr-titles.sh ~/.claude/hooks/conventional-pr-titles.sh
 ln -s ~/dev/claude-config/hooks/filtered-tests-only.sh ~/.claude/hooks/filtered-tests-only.sh
 ln -s ~/dev/claude-config/hooks/lib ~/.claude/hooks/lib
+git clone https://github.com/mattpocock/skills.git ~/.local/share/mattpocock-skills
+mkdir -p ~/.claude/skills
+ln -s ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/skills/grilling
+ln -s ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
 ```
 
 Claude Code writes to `settings.json` itself, for example when you allow a command or change something in `/config`. With the symlink, those changes show up as a diff here, so you can keep or discard them.
@@ -44,4 +48,4 @@ Claude Code writes to `settings.json` itself, for example when you allow a comma
 These aren't in the repo because they're other people's work. I use them unchanged:
 
 - `humanizer` from [blader/humanizer](https://github.com/blader/humanizer). The writing rules in `CLAUDE.md` call it. `settings.json` enables it as a plugin with auto-update on, so Claude Code installs and updates it.
-- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). I install these by hand because the plugin brings a dozen other skills that Claude would pick up on its own.
+- `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills). The install links just these two from a clone, because the plugin brings a dozen other skills that Claude would pick up on its own. `git -C ~/.local/share/mattpocock-skills pull` updates them.
