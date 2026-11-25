@@ -16,9 +16,8 @@ failure_count=0
 check() {
   expected_outcome=$1
   hook_name=$2
-  command=$3
-  repo_name=${4:-personal}
-  hook_input=$(jq -n --arg command "$command" --arg cwd "$fixtures_dir/$repo_name" '{cwd: $cwd, tool_input: {command: $command}}')
+  hook_input=$3
+  case_description=$4
   printf '%s' "$hook_input" | sh "$hooks_dir/$hook_name.sh" >/dev/null 2>&1
   exit_code=$?
   case $exit_code in
@@ -29,12 +28,23 @@ check() {
   case_count=$((case_count + 1))
   if [ "$actual_outcome" != "$expected_outcome" ]; then
     failure_count=$((failure_count + 1))
-    printf 'FAIL %s in %s: expected %s, got %s\n%s\n\n' "$hook_name" "$repo_name" "$expected_outcome" "$actual_outcome" "$command"
+    printf 'FAIL %s: expected %s, got %s\n%s\n\n' "$hook_name" "$expected_outcome" "$actual_outcome" "$case_description"
   fi
 }
 
-allow() { check allow "$@"; }
-block() { check block "$@"; }
+check_command() {
+  repo_name=${4:-personal}
+  check "$1" "$2" "$(jq -n --arg command "$3" --arg cwd "$fixtures_dir/$repo_name" '{cwd: $cwd, tool_input: {command: $command}}')" "In $repo_name: $3"
+}
+
+check_file_write() {
+  check "$1" "$2" "$(jq -n --arg file_path "$3" '{tool_input: {file_path: $file_path}}')" "Write to $3"
+}
+
+allow() { check_command allow "$@"; }
+block() { check_command block "$@"; }
+allow_write() { check_file_write allow "$@"; }
+block_write() { check_file_write block "$@"; }
 
 allow commit-subject-only 'git commit -m "Fix the user'\''s settings path"'
 allow commit-subject-only "git add -A && git commit -am 'Tidy imports' && git push"
@@ -90,6 +100,9 @@ block filtered-tests-only 'npm test 2>&1 | tail -20'
 block filtered-tests-only 'npx jest --ci --maxWorkers 2'
 block filtered-tests-only 'pytest -n 4'
 block filtered-tests-only 'npm run test:unit'
+
+allow_write block-memory-writes '/home/me/dev/app/CLAUDE.md'
+block_write block-memory-writes '/home/me/.claude/projects/-home-me-dev-app/memory/MEMORY.md'
 
 echo "$((case_count - failure_count))/$case_count passed"
 [ "$failure_count" -eq 0 ]
