@@ -22,19 +22,18 @@ These live in `hooks/` and run before Claude's tool calls, blocking the ones tha
 
 ## Install
 
-This moves any existing `CLAUDE.md` and `settings.json` aside, links the repo into `~/.claude`, then sets up the grilling skills.
+This moves any existing `CLAUDE.md`, `settings.json` and `hooks` aside, links the repo into `~/.claude`, then sets up the grilling skills. It's safe to rerun: `ln` leaves links that already exist alone and reports them.
 
 ```sh
 git clone git@github.com:desruc/claude-config.git ~/dev/claude-config
-mv -n ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.pre-claude-config.bak
-mv -n ~/.claude/settings.json ~/.claude/settings.json.pre-claude-config.bak
-ln -s ~/dev/claude-config/CLAUDE.md ~/.claude/CLAUDE.md
-ln -s ~/dev/claude-config/hooks ~/.claude/hooks
-ln -s ~/dev/claude-config/settings.json ~/.claude/settings.json
-git clone https://github.com/mattpocock/skills.git ~/.local/share/mattpocock-skills
 mkdir -p ~/.claude/skills
-ln -s ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/skills/grilling
-ln -s ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
+for name in CLAUDE.md settings.json hooks; do
+  [ -L ~/.claude/$name ] || [ ! -e ~/.claude/$name ] || mv -n ~/.claude/$name ~/.claude/$name.pre-claude-config.bak
+  ln -sn ~/dev/claude-config/$name ~/.claude/$name
+done
+git clone https://github.com/mattpocock/skills.git ~/.local/share/mattpocock-skills
+ln -sn ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/skills/grilling
+ln -sn ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
 ```
 
 The install links only `grilling` and `grill-me` from [mattpocock/skills](https://github.com/mattpocock/skills), because the plugin would bring a dozen other skills Claude could pick up on its own. Run `git -C ~/.local/share/mattpocock-skills pull` to update them.
