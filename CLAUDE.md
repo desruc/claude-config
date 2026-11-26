@@ -90,27 +90,12 @@ co-authorship attributions anywhere.
 
 ## Pull requests
 
-- The title is a Conventional Commits type followed by a plain descriptive
-  sentence (`fix(auth): reject expired tokens`), unless the repo sets
-  `claude.conventionalPrTitles` to false in its git config.
-- Never mention another pull request authored by someone else. It's fine to
-  reference your own related or stacked PRs (e.g. "stacked on #118").
-- Write a real description:
-  - Open with the motivating problem, not a summary of the diff (e.g. "We
-    recently had a few alerts about..." rather than "This PR fixes...").
-  - Write for a reviewer who hasn't seen the ticket or project. Don't explain
-    choices by naming other tickets; say what they enable (e.g. "lets later
-    work build on it"). For groundwork, open with what the PR is for, not
-    where it sits in the plan.
-  - Explain the why: why this approach over alternatives, what tradeoffs it
-    makes. The code already shows the what, so don't narrate it.
-  - Call out known limitations or follow-up work rather than letting the
-    description imply it's a complete fix.
-  - Keep it concise: a few short paragraphs, not a wall of text.
+- Load the `pr-description` skill before writing or editing a pull request's
+  title or description.
 
 ## Writing for others
 
-Applies to PR descriptions, review comments, and chat or ticket messages.
+Applies to review comments and chat or ticket messages.
 
 - Lead with the point or the ask. In a reply, assume the reader already has
   the context; don't rebuild it before getting to the answer.
