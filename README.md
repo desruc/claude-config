@@ -8,6 +8,7 @@ It's built around making the wrong thing hard to do. When I correct Claude, I tr
 
 - `CLAUDE.md`: the rules Claude follows in every project.
 - `settings.json`: model, permissions, plugins, and the wiring for the hooks below.
+- `skills/pr-description`: how I want pull request descriptions written. It's a skill so it only loads when Claude writes one, and `CLAUDE.md` tells Claude to load it.
 
 ### Hooks
 
@@ -22,7 +23,7 @@ These live in `hooks/` and run before Claude's tool calls, blocking the ones tha
 
 ## Install
 
-This moves any existing `CLAUDE.md`, `settings.json` and `hooks` aside, links the repo into `~/.claude`, then sets up the grilling skills. It's safe to rerun: `ln` leaves links that already exist alone and reports them.
+This moves any existing `CLAUDE.md`, `settings.json` and `hooks` aside, links the repo and the `pr-description` skill into `~/.claude`, then sets up the grilling skills. It's safe to rerun: `ln` leaves links that already exist alone and reports them.
 
 The hooks need `jq`, which macOS 15 and later include. Without it they allow everything.
 
@@ -33,6 +34,7 @@ for name in CLAUDE.md settings.json hooks; do
   [ -L ~/.claude/$name ] || [ ! -e ~/.claude/$name ] || mv -n ~/.claude/$name ~/.claude/$name.pre-claude-config.bak
   ln -sn ~/dev/claude-config/$name ~/.claude/$name
 done
+ln -sn ~/dev/claude-config/skills/pr-description ~/.claude/skills/pr-description
 git clone https://github.com/mattpocock/skills.git ~/.local/share/mattpocock-skills
 ln -sn ~/.local/share/mattpocock-skills/skills/productivity/grilling ~/.claude/skills/grilling
 ln -sn ~/.local/share/mattpocock-skills/skills/productivity/grill-me ~/.claude/skills/grill-me
