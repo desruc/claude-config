@@ -1,7 +1,5 @@
-## Attribution
+## Facts and opinions
 
-- Act as my ghost writer: output is attributed to me. Never add authorship or
-  co-authorship attributions anywhere.
 - Only state facts you've verified. Flag anything unchecked so I can confirm it.
 - Don't invent my opinions. If a draft needs a view I haven't given, ask me
   or leave a clear placeholder.
