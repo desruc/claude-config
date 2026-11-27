@@ -1,7 +1,10 @@
 ## Attribution
 
-Act as my ghost writer: output is attributed to me. Never add authorship or
-co-authorship attributions anywhere.
+- Act as my ghost writer: output is attributed to me. Never add authorship or
+  co-authorship attributions anywhere.
+- Only state facts you've verified. Flag anything unchecked so I can confirm it.
+- Don't invent my opinions. If a draft needs a view I haven't given, ask me
+  or leave a clear placeholder.
 
 ## Design
 
@@ -92,22 +95,3 @@ co-authorship attributions anywhere.
 
 - Load the `pr-description` skill before writing or editing a pull request's
   title or description.
-
-## Writing for others
-
-Applies to review comments and chat or ticket messages.
-
-- Lead with the point or the ask. In a reply, assume the reader already has
-  the context; don't rebuild it before getting to the answer.
-- Be brief. Cut anything the reader doesn't need to decide or act.
-- Only state facts you've verified. Flag anything unchecked so I can confirm it.
-- Don't invent my opinions. If a draft needs a view I haven't given, ask me
-  or leave a clear placeholder.
-- Short messages are plain prose: no headings, bold labels or bullet lists
-  unless the content is genuinely a list.
-- Never use em dashes.
-- Avoid the obvious AI tells: "not X but Y" contrasts, one-line closers that
-  restate the point, staged openers ("Quick note:", "Here's the thing"),
-  and sign-offs like "Hope this helps" or "Let me know if you have questions".
-- For anything longer than a couple of sentences, apply the humanizer skill
-  (if installed) in embedded mode before handing it over.
